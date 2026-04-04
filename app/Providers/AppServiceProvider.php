@@ -2,12 +2,15 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\UserRepository;
-use App\Services\Interface\UserServiceInterface;
+use App\Services\Interfaces\UserServiceInterface;
 use App\Services\UserService;
+use App\Repositories\Interfaces\AuthRepositoryInterface;
+use App\Repositories\AuthRepository;
+use App\Services\Interfaces\AuthServiceInterface;
+use App\Services\AuthService;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,16 +19,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // Camada de banco de dados
-        $this-app->bind(
+        $this->app->bind(
             UserRepositoryInterface::class,
             UserRepository::class
         );
 
-        // Camada de regra de negócio
         $this->app->bind(
             UserServiceInterface::class,
             UserService::class
+        );
+
+        $this->app->bind(
+            AuthRepositoryInterface::class,
+            AuthRepository::class
+        );
+
+        $this->app->bind(
+            AuthServiceInterface::class,
+            AuthService::class
         );
     }
 
